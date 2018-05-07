@@ -5,7 +5,7 @@ const Dates = (props) => {
   return (
     <div className='spacing'>
       <span>{props.date}</span>
-      <input onChange={props.getDate} type='date' />
+      <input onChange={props.setDate} type='date' />
     </div>
   )
 }

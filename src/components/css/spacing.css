@@ -1,5 +1,9 @@
 .spacing{
   display: flex;
   justify-content: space-between;
-  padding: 0 2rem;
+  padding: 0 1rem;
+}
+
+input{
+  margin-left: 2rem;
 }
