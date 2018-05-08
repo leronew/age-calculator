@@ -17,38 +17,38 @@ class Index extends React.Component{
           endOfT2:'',
           endOfT3:'',
           teacher:'',
-          studentNames:[],
-          studentDOB: []
+          student:[]
     };
   }
 
-  setFormInfo = (number, e) =>{
+  calcAges = () =>{
+    console.log('Ages calculated on blur');
+  }
+
+  setInfo = (number, e) =>{
     switch (number) {
       case 1:
         this.setState({
           form:e.target.value
         });
-        e.preventDefault();
         break;
 
         case 2:
           this.setState({
             teacher:e.target.value
           });
-          e.preventDefault();
         break;
+
       default:
-      let tempCopy = Object.assign({}, this.state.studentNames);
-      tempCopy[number-3] = e.target.value;
-      this.setState({
-        studentNames: tempCopy
-      });
-      e.preventDefault();
+        const index = number - 3;
+        const tempStudentState = Object.assign([], this.state.student);
+        const tempIndividualStudent = Object.assign({}, tempStudentState[index]);
+        tempIndividualStudent.name = e.target.value;
+        tempStudentState.splice(index, 1, tempIndividualStudent);
+        this.setState({
+          student:tempStudentState
+        });
     }
-  }
-
-  setName = (number, e) => {
-
   }
 
   setDate = (number, e) => {
@@ -57,51 +57,46 @@ class Index extends React.Component{
         this.setState({
             endOfT1:e.target.value
         })
-        e.preventDefault();
         break;
 
       case 2:
         this.setState({
           endOfT2:e.target.value
         })
-        e.preventDefault();
         break;
+
       case 3:
         this.setState({
           endOfT3:e.target.value
         })
-        e.preventDefault();
         break;
+
       default:
-      let tempCopy = Object.assign({}, this.state.studentDOB);
-      tempCopy[number-4] = e.target.value;
-      this.setState({
-        studentDOB: tempCopy
-      });
-      e.preventDefault();
+        const index = number - 4;
+        const tempStudentState = Object.assign([], this.state.student);
+        const tempIndividualStudent = Object.assign({}, tempStudentState[index]);
+        tempIndividualStudent.dob = e.target.value;
+        tempStudentState.splice(index, 1, tempIndividualStudent);
+        this.setState({
+          student:tempStudentState
+        });
+
     }
   }
 
-  updateStudentState = (num) => {
-    let tempStudentNames = Object.assign({}, this.state.studentNames);
-    let tempStudentDOB = Object.assign({}, this.state.studentDOB);
+  setNumberOfStudents = (e) => {
+    const num = e.target.value;
+    let tempStudent = [];
 
     for(let index = 0; index < num; index++) {
-      tempStudentNames[index] = '';
-      tempStudentDOB[index]= ''
+      tempStudent.push(
+        {name: '', dob: '', T1Age: '', T2Age: '', T3Age: ''}
+      )
     };
     this.setState({
-      studentNames: tempStudentNames,
-      studentDOB: tempStudentDOB
+      numInForm: num,
+      student: tempStudent
     });
-  }
-
-  setNumberOfStudents = (e) => {
-    this.setState({
-      numInForm:e.target.value
-    })
-    this.updateStudentState(e.target.value);
-    e.preventDefault();
   }
 
   render() {
@@ -109,8 +104,8 @@ class Index extends React.Component{
         <div className='container'>
           <div className='main'>
             <div className='captureInfo'>
-              <Name setFormInfo={this.setFormInfo.bind(this, 1)} title='Form Class' />
-              <Name setFormInfo={this.setFormInfo.bind(this, 2)} title='Form Teacher' />
+              <Name setInfo={this.setInfo.bind(this, 1)} title='Form Class' />
+              <Name setInfo={this.setInfo.bind(this, 2)} title='Form Teacher' />
               <TotalNum setNumberOfStudents={this.setNumberOfStudents.bind(this)} numInForm='No. of Students'/>
             </div>
             <div className='captureInfo'>
@@ -121,9 +116,10 @@ class Index extends React.Component{
           </div>
           <div className='studentsCards'>
             <GenerateCards
-              setFormInfo={this.setFormInfo}
-              setDOB={this.setDate}
-              number={this.state.numInForm}/>
+              setStudentName={this.setInfo}
+              setDOB ={this.setDate}
+              number={this.state.numInForm}
+              onBlur={this.calcAges}/>
           </div>
         </div>
       )

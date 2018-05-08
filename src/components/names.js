@@ -6,7 +6,7 @@ const Name = (props) => {
   return (
     <div className='spacing'>
       <span className='nameInput'>{props.title}</span>
-      <input onChange={props.setFormInfo} type='text' />
+      <input onChange={props.setInfo} type='text' />
     </div>
   )
 }

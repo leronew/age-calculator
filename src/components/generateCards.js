@@ -8,16 +8,20 @@ import Name from './names.js';
 const GenerateCards = (props) =>{
   const cards = [];
     for(let i = 1; i <= props.number; i++) {
-
+      let index=i + 2;
       let studentLabel = `Student # ${i}`
       cards.push(
         <div
           className={i % 2 === 0 ?  'card-spacing orangeBackground' : 'card-spacing blueBackground'}
-          key={i}
-          index={i}>
+          key={i} >
           <span className='student-label'>{studentLabel}</span>
-          <Name title='Name' setFormInfo={props.setFormInfo.bind(this, i + 2)}/>
-          <Dates setDate={props.setDOB.bind(this, i + 3)} date='DOB' />
+          <Name
+            title='Name'
+            setInfo={props.setStudentName.bind(this, index)}/>
+          <Dates
+            onBlur={props.onBlur}
+            setDate={props.setDOB.bind(this, index+1)}
+            date='DOB' />
           <Age title='Age in Term 1' />
           <Age title='Age in Term 2' />
           <Age title='Age in Term 3' />
