@@ -16,8 +16,8 @@ const GenerateCards = (props) =>{
           key={i}
           index={i}>
           <span className='student-label'>{studentLabel}</span>
-          <Name title='Name' setName={props.setName.bind(this, i + 2)}/>
-          <Dates date='DOB' />
+          <Name title='Name' setFormInfo={props.setFormInfo.bind(this, i + 2)}/>
+          <Dates setDate={props.setDOB.bind(this, i + 3)} date='DOB' />
           <Age title='Age in Term 1' />
           <Age title='Age in Term 2' />
           <Age title='Age in Term 3' />

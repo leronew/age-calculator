@@ -17,43 +17,38 @@ class Index extends React.Component{
           endOfT2:'',
           endOfT3:'',
           teacher:'',
-          student: []
+          studentNames:[],
+          studentDOB: []
     };
   }
 
-  setName = (number, e) =>{
+  setFormInfo = (number, e) =>{
     switch (number) {
       case 1:
         this.setState({
           form:e.target.value
         });
+        e.preventDefault();
         break;
 
-      case 2:
-        this.setState({
-          teacher:e.target.value
-        });
+        case 2:
+          this.setState({
+            teacher:e.target.value
+          });
+          e.preventDefault();
         break;
-
-      case 3:
-        let tempCopy = Object.assign({}, this.state.student);
-        let s = e.target.value;
-        tempCopy[0].name = s;
-
-        this.setState({student: tempCopy})
-        console.log('first student ' + tempCopy[0].name)
-        break;
-
-        case 4:
-          let tempsCopy = Object.assign({}, this.state.student);
-          let r = e.target.value;
-          tempsCopy[1].name = r;
-
-          this.setState({student: tempsCopy})
-          console.log('second student ' + tempsCopy[1].name)
-          break;
-      default:console.log('Good')
+      default:
+      let tempCopy = Object.assign({}, this.state.studentNames);
+      tempCopy[number-3] = e.target.value;
+      this.setState({
+        studentNames: tempCopy
+      });
+      e.preventDefault();
     }
+  }
+
+  setName = (number, e) => {
+
   }
 
   setDate = (number, e) => {
@@ -62,36 +57,42 @@ class Index extends React.Component{
         this.setState({
             endOfT1:e.target.value
         })
-        console.log(this.state.endOfT1)
+        e.preventDefault();
         break;
 
       case 2:
         this.setState({
           endOfT2:e.target.value
         })
-        console.log(this.state.endOfT2)
+        e.preventDefault();
         break;
       case 3:
         this.setState({
           endOfT3:e.target.value
         })
-        console.log(this.state.endOfT3)
+        e.preventDefault();
         break;
-      default:console.log('Good')
+      default:
+      let tempCopy = Object.assign({}, this.state.studentDOB);
+      tempCopy[number-4] = e.target.value;
+      this.setState({
+        studentDOB: tempCopy
+      });
+      e.preventDefault();
     }
   }
 
   updateStudentState = (num) => {
-    let temp = {name:'', dob: '', age: null, mother:'', father:'', contact:'',
-    streetAdd:'', village:''}
-    let tempArray = [];
+    let tempStudentNames = Object.assign({}, this.state.studentNames);
+    let tempStudentDOB = Object.assign({}, this.state.studentDOB);
 
     for(let index = 0; index < num; index++) {
-      tempArray.push(temp)
+      tempStudentNames[index] = '';
+      tempStudentDOB[index]= ''
     };
-
     this.setState({
-      student: tempArray
+      studentNames: tempStudentNames,
+      studentDOB: tempStudentDOB
     });
   }
 
@@ -99,8 +100,8 @@ class Index extends React.Component{
     this.setState({
       numInForm:e.target.value
     })
-
     this.updateStudentState(e.target.value);
+    e.preventDefault();
   }
 
   render() {
@@ -108,8 +109,8 @@ class Index extends React.Component{
         <div className='container'>
           <div className='main'>
             <div className='captureInfo'>
-              <Name setName={this.setName.bind(this, 1)} title='Form Class' />
-              <Name setName={this.setName.bind(this, 2)} title='Form Teacher' />
+              <Name setFormInfo={this.setFormInfo.bind(this, 1)} title='Form Class' />
+              <Name setFormInfo={this.setFormInfo.bind(this, 2)} title='Form Teacher' />
               <TotalNum setNumberOfStudents={this.setNumberOfStudents.bind(this)} numInForm='No. of Students'/>
             </div>
             <div className='captureInfo'>
@@ -119,7 +120,10 @@ class Index extends React.Component{
             </div>
           </div>
           <div className='studentsCards'>
-            <GenerateCards setName={this.setName.bind(this)} number={this.state.numInForm}/>
+            <GenerateCards
+              setFormInfo={this.setFormInfo}
+              setDOB={this.setDate}
+              number={this.state.numInForm}/>
           </div>
         </div>
       )
