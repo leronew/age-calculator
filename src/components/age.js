@@ -4,8 +4,8 @@ import './css/button.css';
 const Age = (props) => {
   return (
     <div>
-      <span>{props.title}</span>
-      <label></label>
+      <span>{props.title}{props.children}</span>
+      <label>{}</label>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import './css/spacing.css';
 import '../../src/index.css';
 import Age from './age.js';
@@ -12,23 +12,18 @@ const GenerateCards = (props) =>{
       let studentLabel = `Student # ${i}`
       cards.push(
         <div
-          className={i % 2 === 0 ?  'card-spacing orangeBackground' : 'card-spacing blueBackground'}
-          key={i} >
+          key={i}
+          className={i % 2 === 0 ?  'card-spacing orangeBackground' : 'card-spacing blueBackground'}>
           <span className='student-label'>{studentLabel}</span>
-          <Name
-            title='Name'
-            setInfo={props.setStudentName.bind(this, index)}/>
-          <Dates
-            onBlur={props.onBlur}
-            setDate={props.setDOB.bind(this, index+1)}
-            date='DOB' />
+          <Name title='Name' setInfo={props.setStudentName.bind(this, index)}/>
+          <Dates onBlur={props.onBlur} setDate={props.setDOB.bind(this, index+1)} date='DOB' />
           <Age title='Age in Term 1' />
           <Age title='Age in Term 2' />
           <Age title='Age in Term 3' />
         </div>
       )
   }
-  return cards
+  return cards;
 }
 
 export default GenerateCards;
